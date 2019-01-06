@@ -4,9 +4,9 @@
  You may add additional methods to this class, for example "rotate" and "accelerate" 
  might be useful.
  */
-class Spaceship extends Mover {   
+public class Spaceship extends Mover {   
 
-  ArrayList<PVector> shieldVerticies;
+  ArrayList shieldVerticies;
   static final int NUM_SHIELD_VERTICIES = 6;
   static final float SHIELD_RADIUS = 30.0;
   static final float bulletCapacity = 38.0;
@@ -18,7 +18,7 @@ class Spaceship extends Mover {
 
   Spaceship(float x, float y) {
     super(x, y);
-    shieldVerticies = new ArrayList<PVector>();
+    shieldVerticies = new ArrayList();
 
     for (int i = 0; i < NUM_SHIELD_VERTICIES; i++) {
       float angle = radians(360.0/NUM_SHIELD_VERTICIES*i);
@@ -82,12 +82,12 @@ class Spaceship extends Mover {
       float flubY = (float)Math.sin(radians(flubAngle))*20.0 + 30.5;
       flubAngle = flubAngle + 3.4;
       for (int i = 0; i < shieldVerticies.size()-1; i++) {
-        PVector p1 = shieldVerticies.get(i);
-        PVector p2 = shieldVerticies.get(i+1);
+        PVector p1 = (PVector)shieldVerticies.get(i);
+        PVector p2 = (PVector)shieldVerticies.get(i+1);
         curve(p1.x+flubX, p1.y+flubY, p1.x, p1.y, p2.x, p2.y, p2.x - flubX, p2.y - flubY);
       }
-      PVector p2 = shieldVerticies.get(shieldVerticies.size()-1);
-      PVector p1 = shieldVerticies.get(0);
+      PVector p2 = (PVector)shieldVerticies.get(shieldVerticies.size()-1);
+      PVector p1 = (PVector)shieldVerticies.get(0);
       curve(p1.x+flubX, p1.y+flubY, p1.x, p1.y, p2.x, p2.y, p2.x - flubX, p2.y - flubY);
 
       strokeWeight(f);
