@@ -18,17 +18,17 @@ interface Movable {
   float getDirection();
 
   /*
-   Return the speed of the Movable.
-   The speed you use is a relative value and will
-   feel different for different frame rates. For example,
-   if frameRate is set to 48, then a speed of 1 would move 48 pixels 
-   per second.
+    Return the speed of the Movable.
+    The speed you use is a relative value and will
+    feel different for different frame rates. For example,
+    if frameRate is set to 48, then a speed of 1 would move 48 pixels 
+    per second.
    */
   float getSpeed();
 
   /*
-   Return the radius of influence. If you could draw a circle
-   around your object, then what would this radius be.
+    Return the radius of influence. If you could draw a circle
+    around your object, then what would this radius be.
    */
   float getRadius();
 
@@ -43,65 +43,157 @@ interface Movable {
   void setSpeed(float newSpeed);
 
   /*
-   Update the internals of the instance
-   */
-  void update(); 
-
-  /*
-    Display the isntance
-   */
-  void show();
-
-  /*
-   Return true if the instance of Movable is "colliding with" 
+    Return true if the instance of Movable is "colliding with" 
    the movable referred to by object.  *Note* An object should not
    be able to collide with iteself.
    */
   boolean collidingWith(Movable object);
 }
 
+/*
+  The Animate interface must 
+*/
+interface Animate {
+  /*
+    Display the isntance
+   */
+  void show();
+
+  /*
+    Update the internals of the instance
+   */
+  void update();
+}
 
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
- Abstrac base class Mover 
- */
-abstract class Mover {// implements Movable {
+
+class ColliderCount {
+  Movable m;
+  int collideDelay;
+
+  ColliderCount(Movable m) {
+    this.m = m;
+    collideDelay = 4*(int)frameRate;
+  }
+
+  int tick() {
+    return collideDelay--;
+  }
+}
+
+abstract class Mover implements Movable, Animate {
+
 
   protected float x, y;
   protected float speed;
   protected float direction;
   protected int myColor;
-  protected float radius;  
+  protected float radius;
+  protected boolean showVelocity;
+
+  protected long id;
+
+  protected ArrayList<ColliderCount> collisions;
 
   Mover(float x, float y) {
-    this(x, y, 0, 0);
+    this.x = x;
+    this.y = y;
+    showVelocity = false;
+    speed = 0;
+    direction = 0;
+    myColor = 240;
+    radius = 10.0; //used for collision
+    id = millis();
+    collisions = new ArrayList<ColliderCount>();
   }
 
   Mover(float x, float y, float speed, float direction) {
-    this.x = x;
-    this.y = y;    
+    this(x, y);
     this.speed = speed;
     this.direction = direction;
-    myColor = 225;
-    radius = 0.0;
+    myColor = 240;
   }
 
-  /*
-    Most of your movalbe objects should follow this pattern.
-   */
   void update() {
     x = x + speed*(float)Math.cos(radians(direction));
+    if (x>width)
+      x = 0;  
+    if (x < 0)
+      x = width;
     y = y + speed*(float)Math.sin(radians(direction));
+    if (y>height)
+      y = 0;
+    if (y<0)
+      y = height;
 
-    //todo: You need to decide what to do when X is less than 0 or greater than width
-    //todo: You need to decide what to do when Y is less than 0 or greater than height
+    //chance to remove close collisions...
+    for (int i = collisions.size() - 1; i >= 0; i--) {
+      if (collisions.get(i).tick()<0) {
+        collisions.remove(i);
+      }
+    }
   }
 
-  /*
-    Save this for your subclasses to override.
-  */
-  abstract void show();
+  float getX() { 
+    return x;
+  }
 
-  //TODO: Part I: implement the methods of Moveable
-  
+  float getY() { 
+    return y;
+  }
+
+  float getDirection() {
+    return direction;
+  }
+
+  float getRadius() {
+    return radius;
+  }
+
+  float getSpeed() {
+    return speed;
+  }
+
+  void setDirection(float newDirection) {
+    direction = newDirection;
+  }
+
+  void setSpeed(float newSpeed) {
+    speed = newSpeed;
+  }
+
+  public String toString() {
+    return "(" + x + ", " + y + ") - radius = " + radius;
+  }
+
+  boolean collidingWith(Movable m) {     
+    //How far away are OUR centers
+    float d = dist(x, y, m.getX(), m.getY());
+    
+    if ((radius + m.getRadius()) >= d) {
+      for (ColliderCount counter : collisions) {
+        if (counter.m == m) {
+          return false;
+        }
+      }      
+      collisions.add(new ColliderCount(m));
+      m.collidingWith(this);
+      return true; //xTime > 0 && yTime > 0;
+    } 
+    return false;
+  }
+
+  void setNewVelocity(float x, float y) {    
+    speed = (float)Math.sqrt(x*x + y*y);
+    direction = degrees( (new PVector(x, y)).heading() );
+  }
+
+  void displayVelVector(boolean enabled) {
+    showVelocity = enabled;
+  }
+
+  PVector velocity() {
+    return new PVector(speed*(float)Math.cos(radians(direction)), 
+      speed*(float)Math.sin(radians(direction)));
+  }
 }
