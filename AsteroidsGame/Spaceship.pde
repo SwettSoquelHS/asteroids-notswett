@@ -114,9 +114,11 @@ class Spaceship extends Mover {
 
   boolean hasHitTarget(Movable target) {
     for (int i = bullets.size() - 1; i >= 0; i--) {
-      Bullet b = (Bullet)bullets.get(i);      
-      if (target.collidingWith(b)) {
-        return true;
+      Bullet b = (Bullet)bullets.get(i);
+      if(b!= null){
+        if (target.collidingWith(b)) {
+          return true;
+        }
       }
     }
     return false;
