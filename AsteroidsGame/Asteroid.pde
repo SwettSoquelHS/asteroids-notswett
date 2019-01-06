@@ -1,11 +1,11 @@
 /*
   Asteroid class
-    Should extend Mover class and implement show.
-    
-    Initially, your asteroid may just be a simple circle or square
-    but the final program should use "beginShap(), vertex(), and endShape()"
-    to render the asteroid.
-*/
+ Should extend Mover class and implement show.
+ 
+ Initially, your asteroid may just be a simple circle or square
+ but the final program should use "beginShap(), vertex(), and endShape()"
+ to render the asteroid.
+ */
 
 public class Asteroid extends Mover {
 
@@ -30,18 +30,16 @@ public class Asteroid extends Mover {
     super(x, y, speed, direction);
     this.size = size;
 
-    spin = 0;
-    if (Math.random()>50)
-      spin_dir = 1;
-    else
+    spin = 1;
+    if (Math.random() > 0.50)
       spin_dir = -1;
 
     if (size == 3)
-      num_sides = (int)random(5)+8;
+      num_sides = (int)(Math.random()*5)+8;
     else if (size == 2)
-      num_sides = (int)random(4)+6;
+      num_sides = (int)(Math.random()*4)+6;
     else
-      num_sides = (int)random(3)+5;
+      num_sides = (int)(Math.random()*3)+5;
 
 
     radius = MAX_RADIUS;
@@ -70,7 +68,7 @@ public class Asteroid extends Mover {
     pushMatrix();
     translate(x, y);
 
-      fill(myColor, 98);
+    fill(myColor, 98);
     stroke(255, 102, 0);
 
     if (showVelocity) {
@@ -87,8 +85,8 @@ public class Asteroid extends Mover {
       vertex( verticies[i].x, verticies[i].y  );
     }      
     endShape(CLOSE);
-  
-    if(showVelocity){
+
+    if (showVelocity) {
       ellipse(0, 0, 2*radius, 2*radius);
     }  
 
@@ -98,9 +96,9 @@ public class Asteroid extends Mover {
   float getSize() {
     return size;
   }
-  
+
   void setNewVelocity(float x, float y) { 
-    super.setNewVelocity(x,y);
+    super.setNewVelocity(x, y);
     spin_dir *= -1;
   }
 }

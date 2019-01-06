@@ -48,16 +48,16 @@ void setup() {
   hero = new Spaceship(width/2.0, height /2.0, 0, 0);
   rocks = new Asteroid[NUM_ASTEROIDS];
   for (int i = 0; i < rocks.length; i++) {
-    float speed = random(1.1)+0.2;
-    int size = (int)random(3)+1;
+    float speed = (float) Math.random()*1.1 + 0.2;
+    int size = (int)(Math.random()*2+1);
 
     if (size == 2)
       speed = speed/2;
-    if (size == 3)
+    if (size >= 3)
       speed = speed/30;
 
     rocks[i] = newRock(speed, size);
-    rocks[i].displayVelVector(DEBUG_ON);
+    //rocks[i].displayVelVector(DEBUG_ON);
   }
 
 
@@ -157,16 +157,22 @@ void drawStarfield(Star[] stars){
 //  }
 //}
 
+
 Asteroid newRock(float speed, int size) {
   Asteroid temp = new Asteroid(
-    (float)Math.random()*width, (float)Math.random()*height, 
-    speed, (float)Math.random()*361, size);
+          (float)(Math.random()*width), 
+          (float)(Math.random()*height), 
+          speed, 
+          (float)(Math.random()*361), size);
+    
   for (int j = 0; j < rocks.length; j++) {
     if (rocks[j] != null) {
       if (temp.collidingWith(rocks[j]) ) {
         temp = new Asteroid(
-          (float)Math.random()*width, (float)Math.random()*height, speed, 
-          (float)Math.random()*361, size);
+          (float)(Math.random()*width), 
+          (float)(Math.random()*height), 
+          speed, 
+          (float)(Math.random()*361), size);
         return temp;
       }
     }
