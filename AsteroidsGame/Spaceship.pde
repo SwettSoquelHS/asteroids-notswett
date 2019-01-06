@@ -53,13 +53,15 @@ public class Spaceship extends Mover {
     //must work backwards...
     for (int i = bullets.size() - 1; i >= 0; i--) {
       Bullet b = (Bullet)bullets.get(i);
-      b.update();
+      if (b != null) {
+        b.update();
 
-      //if bullet is offscreen then it should be deleted
-      if ( !b.alive() ) { 
-        bullets.remove(i);
-      } else {
-        b.show();
+        //if bullet is offscreen then it should be deleted
+        if ( !b.alive() ) { 
+          bullets.remove(i);
+        } else {
+          b.show();
+        }
       }
     }
   }
@@ -115,7 +117,7 @@ public class Spaceship extends Mover {
   boolean hasHitTarget(Movable target) {
     for (int i = bullets.size() - 1; i >= 0; i--) {
       Bullet b = (Bullet)bullets.get(i);
-      if(b!= null){
+      if (b!= null) {
         if (target.collidingWith(b)) {
           return true;
         }
