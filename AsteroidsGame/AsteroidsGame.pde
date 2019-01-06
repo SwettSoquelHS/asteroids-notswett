@@ -35,8 +35,8 @@ float scale = 1.75;
  */
 void setup() {
   frameRate(48);
-  //size(640, 480); //1280 x 800
-  surface.setSize((int)(640*scale), (int)(400*scale));
+  size(800, 600); //1280 x 800
+  
   MOVE_FORWARD = false;
   ROTATE_LEFT = false;
   ROTATE_RIGHT = false;
