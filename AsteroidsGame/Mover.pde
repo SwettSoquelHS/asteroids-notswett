@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  All objects in this world that move must implemnt the Movalbe interface.
  */
-interface Movable {
+public interface Movable {
   /*
     Return the x location of the Movable
    */

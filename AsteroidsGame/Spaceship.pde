@@ -1,10 +1,10 @@
 /*
   Spaceship class
-    Should extend Mover class and implement show.
-    You may add additional methods to this class, for example "rotate" and "accelerate" 
-    might be useful.
-*/
-class Spaceship extends Mover{   
+ Should extend Mover class and implement show.
+ You may add additional methods to this class, for example "rotate" and "accelerate" 
+ might be useful.
+ */
+class Spaceship extends Mover {   
 
   ArrayList<PVector> shieldVerticies;
   static final int NUM_SHIELD_VERTICIES = 6;
@@ -69,7 +69,7 @@ class Spaceship extends Mover{
   }
 
   void drawShield() {
-    
+
     fill(#05F562, 20);
     stroke(#05F562);
     float f = g.strokeWeight;
@@ -115,9 +115,8 @@ class Spaceship extends Mover{
   boolean hasHitTarget(Movable target) {
     for (int i = bullets.size() - 1; i >= 0; i--) {
       Bullet b = bullets.get(i);
-      for (int j = 0; j < rocks.length; j++) {
-        if (target.collidingWith(b)) 
-          return true;
+      if (target.collidingWith(b)) {
+        return true;
       }
     }
     return false;
