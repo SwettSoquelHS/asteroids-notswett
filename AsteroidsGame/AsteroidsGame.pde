@@ -81,7 +81,7 @@ void draw() {
   drawAsteroids();
 
   //check for asteroid collisions
-  if (okToCollide() ) {
+  if (isOkToCollide() ) {
     handleAsteroidCollisions();
     setNextCollideCheck();
   }
@@ -201,7 +201,7 @@ int setNextCollideCheck() {
   return okToCollide;
 }
 
-boolean okToCollide() {
+boolean isOkToCollide() {
   return okToCollide < millis();
 }
 
