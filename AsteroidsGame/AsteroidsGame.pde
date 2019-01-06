@@ -159,12 +159,14 @@ void drawStarfield(Star[] stars){
 
 Asteroid newRock(float speed, int size) {
   Asteroid temp = new Asteroid(
-    random(width), random(height), speed, random(360), size);
+    (float)Math.random()*width, (float)Math.random()*height, 
+    speed, (float)Math.random()*361, size);
   for (int j = 0; j < rocks.length; j++) {
     if (rocks[j] != null) {
       if (temp.collidingWith(rocks[j]) ) {
         temp = new Asteroid(
-          random(width), random(height), speed, random(360), size);
+          (float)Math.random()*width, (float)Math.random()*height, speed, 
+          (float)Math.random()*361, size);
         return temp;
       }
     }
@@ -174,12 +176,12 @@ Asteroid newRock(float speed, int size) {
 
 Asteroid newRock(float speed, int size, float x, float y) {
   Asteroid temp = new Asteroid(
-    x, y, speed, random(360), size);
+    x, y, speed, (float)Math.random()*361, size);
   for (int j = 0; j < rocks.length; j++) {
     if (rocks[j] != null) {
       if (temp.collidingWith(rocks[j]) ) {
         temp = new Asteroid(
-          x, y, speed, random(360), size);
+          x, y, speed, (float)Math.random()*361, size);
         return temp;
       }
     }
