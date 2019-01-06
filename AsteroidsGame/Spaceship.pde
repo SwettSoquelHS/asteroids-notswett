@@ -13,7 +13,7 @@ class Spaceship extends Mover {
 
   protected float flubAngle;
 
-  ArrayList<Bullet> bullets;
+  ArrayList bullets;
 
 
   Spaceship(float x, float y) {
@@ -27,7 +27,7 @@ class Spaceship extends Mover {
         (float)Math.cos(angle)*SHIELD_RADIUS, (float)Math.sin(angle)*SHIELD_RADIUS
         ));
     }
-    bullets = new ArrayList<Bullet>(25);
+    bullets = new ArrayList(25);
     flubAngle = 0.0;
   }
 
@@ -52,7 +52,7 @@ class Spaceship extends Mover {
 
     //must work backwards...
     for (int i = bullets.size() - 1; i >= 0; i--) {
-      Bullet b = bullets.get(i);
+      Bullet b = (Bullet)bullets.get(i);
       b.update();
 
       //if bullet is offscreen then it should be deleted
@@ -114,7 +114,7 @@ class Spaceship extends Mover {
 
   boolean hasHitTarget(Movable target) {
     for (int i = bullets.size() - 1; i >= 0; i--) {
-      Bullet b = bullets.get(i);
+      Bullet b = (Bullet)bullets.get(i);      
       if (target.collidingWith(b)) {
         return true;
       }

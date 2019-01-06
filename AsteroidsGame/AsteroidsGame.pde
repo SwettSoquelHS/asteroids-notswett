@@ -300,7 +300,7 @@ Asteroid[] fixNulls(int hadSize, float x, float y) {
 void doBulletWork() {
   //must work backwards...
   for (int j = 0; j < rocks.length; j++) {      
-    if ( hero.hasHitTarget(rocks[j])  ) {
+    if ( hero.hasHitTarget( rocks[j]) ) {
       int size = (int)rocks[j].getSize();
       float xWas = rocks[j].getX();
       float yWas = rocks[j].getY();
