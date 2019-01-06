@@ -73,8 +73,7 @@ public class Spaceship extends Mover {
   void drawShield() {
 
     fill(#05F562, 20);
-    stroke(#05F562);
-    float f = g.strokeWeight;
+    stroke(#05F562);    
     float shieldStrength = 6.0 - bullets.size()/.9;
 
     if (shieldStrength > 0.1) {
@@ -92,7 +91,7 @@ public class Spaceship extends Mover {
       PVector p1 = (PVector)shieldVerticies.get(0);
       curve(p1.x+flubX, p1.y+flubY, p1.x, p1.y, p2.x, p2.y, p2.x - flubX, p2.y - flubY);
 
-      strokeWeight(f);
+      strokeWeight(1);
     }
   }
 
