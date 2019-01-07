@@ -32,11 +32,11 @@ float scale = 1.75;
 
 /* * * * * * * * * * * * * * * * * * * * * * *
   Initialize all of your variables and game state here
- */
+ */ 
 void setup() {
   frameRate(48);
   size(800, 600); //1280 x 800
-  
+  smooth(8);   
   MOVE_FORWARD = false;
   ROTATE_LEFT = false;
   ROTATE_RIGHT = false;
