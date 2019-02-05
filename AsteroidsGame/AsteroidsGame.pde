@@ -48,7 +48,7 @@ void setup() {
   hero = new Spaceship(width/2.0, height /2.0, 0, 0);
   rocks = new Asteroid[NUM_ASTEROIDS];
   for (int i = 0; i < rocks.length; i++) {
-    float speed = (float) Math.random()*1.1 + 0.2;
+    float speed = 3;//(float) (Math.random()*1.1 + 0.2);
     int size = (int)(Math.random()*2+1);
 
     if (size == 2)
@@ -56,7 +56,9 @@ void setup() {
     if (size >= 3)
       speed = speed/30;
 
-    rocks[i] = newRock(speed, size);
+    rocks[i] = newRock(speed, size, (float)(Math.random()*width), 
+          (float)(Math.random()*height));
+    println(rocks[i]);
     //rocks[i].displayVelVector(DEBUG_ON);
   }
 
@@ -113,6 +115,22 @@ void draw() {
 }
 
 
+Asteroid newRock(float speed, int size, float x, float y) {
+  println("x = " + x);
+  Asteroid temp = new Asteroid(
+    x, y, speed, (float)Math.random()*361, size);
+  for (int j = 0; j < rocks.length; j++) {
+    if (rocks[j] != null) {
+      if (temp.collidingWith(rocks[j]) ) {
+        temp = new Asteroid(
+          x, y, speed, (float)(Math.random()*361), size);
+        return temp;
+      }
+    }
+  }
+  return temp;
+}
+
 Star[] makeStarfield(int numStars){
   Star[] result = new Star[numStars];
   for(int i = 0; i < result.length; i++){
@@ -158,42 +176,7 @@ void drawStarfield(Star[] stars){
 //}
 
 
-Asteroid newRock(float speed, int size) {
-  Asteroid temp = new Asteroid(
-          (float)(Math.random()*width), 
-          (float)(Math.random()*height), 
-          speed, 
-          (float)(Math.random()*361), size);
-    
-  for (int j = 0; j < rocks.length; j++) {
-    if (rocks[j] != null) {
-      if (temp.collidingWith(rocks[j]) ) {
-        temp = new Asteroid(
-          (float)(Math.random()*width), 
-          (float)(Math.random()*height), 
-          speed, 
-          (float)(Math.random()*361), size);
-        return temp;
-      }
-    }
-  }
-  return temp;
-}
 
-Asteroid newRock(float speed, int size, float x, float y) {
-  Asteroid temp = new Asteroid(
-    x, y, speed, (float)Math.random()*361, size);
-  for (int j = 0; j < rocks.length; j++) {
-    if (rocks[j] != null) {
-      if (temp.collidingWith(rocks[j]) ) {
-        temp = new Asteroid(
-          x, y, speed, (float)Math.random()*361, size);
-        return temp;
-      }
-    }
-  }
-  return temp;
-}
 
 int setNextTimeCanFire() {
   okToFireAt = millis()+100; 

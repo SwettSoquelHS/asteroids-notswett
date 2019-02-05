@@ -24,10 +24,12 @@ public class Asteroid extends Mover {
 
   Asteroid(float x, float y, float speed, float direction) {
     this(x, y, speed, direction, 3);
+    
   }
 
   Asteroid(float x, float y, float speed, float direction, float size) {
     super(x, y, speed, direction);
+    println("x = " + x);
     this.size = size;
 
     spin = 1;

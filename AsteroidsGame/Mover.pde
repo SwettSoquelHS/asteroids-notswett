@@ -19,16 +19,16 @@ public interface Movable {
 
   /*
     Return the speed of the Movable.
-    The speed you use is a relative value and will
-    feel different for different frame rates. For example,
-    if frameRate is set to 48, then a speed of 1 would move 48 pixels 
-    per second.
+   The speed you use is a relative value and will
+   feel different for different frame rates. For example,
+   if frameRate is set to 48, then a speed of 1 would move 48 pixels 
+   per second.
    */
   float getSpeed();
 
   /*
     Return the radius of influence. If you could draw a circle
-    around your object, then what would this radius be.
+   around your object, then what would this radius be.
    */
   float getRadius();
 
@@ -52,7 +52,7 @@ public interface Movable {
 
 /*
   The Animate interface must 
-*/
+ */
 interface Animate {
   /*
     Display the isntance
@@ -95,26 +95,33 @@ abstract class Mover implements Movable, Animate {
 
   protected ArrayList<ColliderCount> collisions;
 
-  Mover(float x, float y) {
-    this.x = x;
-    this.y = y;
-    showVelocity = false;
+  private void initDefaults(){
     speed = 0;
     direction = 0;
     myColor = 240;
     radius = 10.0; //used for collision
     id = millis();
-    collisions = new ArrayList<ColliderCount>();
+    collisions = new ArrayList<ColliderCount>();    
   }
 
-  Mover(float x, float y, float speed, float direction) {
-    this(x, y);
+  Mover(float x, float y) {
+    this.x = x;
+    this.y = y;
+    showVelocity = false;
+    initDefaults();
+  }
+
+  Mover(float x, float y, float speed, float direction) {   
+    initDefaults();
+    this.x = x;
+    this.y = y;
     this.speed = speed;
     this.direction = direction;
     myColor = 240;
   }
 
   void update() {
+    //println("x is : " + x);
     x = x + speed*(float)Math.cos(radians(direction));
     if (x>width)
       x = 0;  
@@ -169,7 +176,7 @@ abstract class Mover implements Movable, Animate {
   boolean collidingWith(Movable m) {     
     //How far away are OUR centers
     float d = dist(x, y, m.getX(), m.getY());
-    
+
     if ((radius + m.getRadius()) >= d) {
       for (ColliderCount counter : collisions) {
         if (counter.m == m) {
