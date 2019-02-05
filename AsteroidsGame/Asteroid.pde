@@ -28,8 +28,7 @@ public class Asteroid extends Mover {
   }
 
   Asteroid(float x, float y, float speed, float direction, float size) {
-    super(x, y, speed, direction);
-    println("x = " + x);
+    super(x, y, speed, direction);   
     this.size = size;
 
     spin = 1;

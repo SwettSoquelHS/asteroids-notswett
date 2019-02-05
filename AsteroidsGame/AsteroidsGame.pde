@@ -58,7 +58,7 @@ void setup() {
 
     rocks[i] = newRock(speed, size, (float)(Math.random()*width), 
           (float)(Math.random()*height));
-    println(rocks[i]);
+   
     //rocks[i].displayVelVector(DEBUG_ON);
   }
 
@@ -115,8 +115,7 @@ void draw() {
 }
 
 
-Asteroid newRock(float speed, int size, float x, float y) {
-  println("x = " + x);
+Asteroid newRock(float speed, int size, float x, float y) {  
   Asteroid temp = new Asteroid(
     x, y, speed, (float)Math.random()*361, size);
   for (int j = 0; j < rocks.length; j++) {
